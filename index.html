@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<!-- saved from url=(0124)file:///C:/Users/Lenovo/Desktop/%E6%B0%B4%E4%B9%A6%E9%A9%AC%E5%B0%BE%E7%BB%A3%E5%AE%A3%E4%BC%A0%E7%BD%91%E7%AB%99/index.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水书马尾绣 - 水族非物质文化遗产宣传</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            scroll-behavior: smooth; /* 翻页平滑动画核心 */
+        }
+
+        /* 颜色变量：贴合马尾绣民族风 */
+        :root {
+            --primary-color: #8B4513; /* 棕木色 */
+            --secondary-color: #CD853F; /* 秘鲁色 */
+            --accent-color: #F5DEB3; /* 小麦色 */
+            --text-color: #333333;
+            --light-bg: rgba(249, 246, 240, 0.95); /* 半透明白底 */
+            --white: #FFFFFF;
+        }
+
+        /* 全局背景：马尾绣纹样平铺 */
+        body {
+            background-image: url("images/62a414f0860d1f3b2df0c640a4f5076a.jpg"); /* 马尾绣背景图路径 */
+            background-repeat: repeat;
+            background-attachment: fixed; /* 背景固定，滚动不移动 */
+            background-size: 200px; /* 背景纹样大小 */
+        }
+
+        /* 导航栏样式 */
+        nav {
+            background-color: var(--primary-color);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Banner区样式 + 入场动画 */
+        .banner {
+            background: linear-gradient(rgba(139, 69, 19, 0.85), rgba(139, 69, 19, 0.9)), 
+                        url("images/banner-bg.jpg"); /* banner背景图 */
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s ease-out 0.3s forwards; /* 翻页入场动画 */
+        }
+
+        .banner-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .banner-content p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* 通用容器样式 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            background-color: var(--light-bg);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out; /* 滚动翻页动画 */
+        }
+
+        /* 滚动后显示动画 */
+        .container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 板块标题样式 */
+        .section-title {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            margin: 15px auto 0;
+        }
+
+        /* 文化介绍板块 */
+        .intro-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .intro-text {
+            color: var(--text-color);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .intro-text h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .intro-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .intro-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .intro-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* 多图片展示板块 */
+        .gallery-section {
+            padding: 20px 0;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover; /* 图片等比裁剪 */
+            display: block;
+        }
+
+        .gallery-item p {
+            padding: 15px;
+            text-align: center;
+            color: var(--text-color);
+            background-color: var(--white);
+        }
+
+        /* 多视频展示板块 */
+        .video-section {
+            padding: 20px 0;
+        }
+
+        .video-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .video-wrapper {
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .video-desc {
+            margin-top: 15px;
+            color: var(--text-color);
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* 联系方式板块 */
+        .contact-section {
+            padding: 20px 0;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .contact-info {
+            color: var(--text-color);
+            line-height: 2;
+            font-size: 1.1rem;
+        }
+
+        .contact-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info i {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #6d380f;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-content p {
+            margin-top: 15px;
+            line-height: 1.8;
+        }
+
+        /* 翻页动画关键帧 */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 15px;
+            }
+
+            .banner-content h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .intro-content, .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .video-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <!-- 引入图标库（联系方式图标） -->
+    <link rel="stylesheet" href="./index_files/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">水绣云览阁</div>
+            <div class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#intro">文化介绍</a>
+                <a href="#gallery">图片展示</a>
+                <a href="#video">视频展示</a>
+                <a href="#contact">联系方式</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Banner区 -->
+    <section class="banner" id="home">
+        <div class="banner-content">
+            <h1>指尖非遗·数字新生——水绣云承非遗创享智慧平台</h1>
+            <p>探寻水族千年非遗文化，感受马尾绣的精美绝伦与水书的神秘深邃，传承民族文化之美</p>
+        </div>
+    </section>
+
+    <!-- 文化介绍板块 -->
+    <div class="container visible" id="intro">
+        <h2 class="section-title">水书与马尾绣的文化渊源</h2>
+        <div class="intro-content">
+            <div class="intro-text">
+                <h3>水书：水族的“百科全书”</h3>
+                <p>水书是水族先民创制的一种独具特色的古老文字，被誉为“水族的百科全书”，是世界上现存的少数几种象形文字之一。水书承载着水族的天文、地理、历法、宗教、哲学等丰富内容，是水族文化的核心载体，2006年被列入国家级非物质文化遗产名录。</p>
+                <br>
+                <h3>马尾绣：指尖上的水族艺术</h3>
+                <p>马尾绣是水族妇女世代传承的传统手工技艺，以马尾为核心原材料，通过“扎”“绣”“挑”“补”等复杂工序制作而成，绣品色彩艳丽、图案精美、质感独特，被誉为“刺绣活化石”。马尾绣不仅是装饰艺术，更蕴含着水族的图腾信仰和生活智慧。</p>
+            </div>
+            <div class="intro-image">
+                <!-- 替换为你的文化介绍图片 -->
+                <img src="./index_files/B8844446EDE5149F2B0ABCC6C9CCACEBD1B2B89F_size1767_w1267_h734.png" alt="水书马尾绣文化">
+            </div>
+        </div>
+    </div>
+
+    <!-- 多图片展示板块 -->
+    <div class="container visible" id="gallery">
+        <h2 class="section-title">非遗文化图片展示</h2>
+        <div class="gallery-section">
+            <div class="image-gallery">
+                <!-- 图片1：替换路径和描述 -->
+                <div class="gallery-item">
+                    <img src="./index_files/微信图片_20260314193915_450_628.jpg" alt="马尾绣成品">
+                    <p>马尾绣精美成品展示</p>
+                </div>
+                <!-- 图片2：替换路径和描述 -->
+                <div class="gallery-item">
+                    <img src="./index_files/picture1.jpg" alt="马尾绣制作">
+                    <p>马尾绣手工制作过程</p>
+                </div>
+                <!-- 图片3：替换路径和描述 -->
+                <div class="gallery-item">
+                    <img src="./index_files/微信图片_20260314193914_449_628.jpg" alt="水书文字">
+                    <p>水书古老文字记载</p>
+                </div>
+                <!-- 图片4：替换路径和描述 -->
+                <div class="gallery-item">
+                    <img src="./index_files/微信图片_20260314193912_447_628.jpg" alt="水书传承">
+                    <p>水族服饰</p>
+                </div>
+                <!-- 图片5：替换路径和描述 -->
+                <div class="gallery-item">
+                    <img src="./index_files/R-C.jpg" alt="马尾绣纹样">
+                    <p>马尾绣经典纹样设计</p>
+                </div>
+                <!-- 图片6：替换路径和描述 -->
+                <div class="gallery-item">
+                    <img src="./index_files/R-C (1).jpg" alt="水族文化">
+                    <p>水族民俗文化活动</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 多视频展示板块 -->
+    <div class="container visible" id="video">
+        <h2 class="section-title">非遗文化视频展示</h2>
+        <div class="video-section">
+            <div class="video-gallery">
+                <!-- 视频1：替换路径和描述 -->
+                <div class="video-wrapper">
+                    <video controls="" autoplay="" muted="" playsinline="" preload="metadata" poster="images/video1-cover.jpg">
+                        <source src="videos/video1.mp4" type="video/mp4">
+                        您的浏览器不支持播放，请<a href="videos/video1.mp4">下载查看</a>。
+                    </video>
+                    <p class="video-desc">马尾绣制作工艺完整教学</p>
+                </div>
+                <!-- 视频2：替换路径和描述 -->
+                <div class="video-wrapper">
+                    <video controls="" autoplay="" muted="" playsinline="" preload="metadata" poster="images/video2-cover.jpg">
+                        <source src="videos/video2.mp4" type="video/mp4">
+                        您的浏览器不支持播放，请<a href="videos/video2.mp4">下载查看</a>。
+                    </video>
+                    <p class="video-desc">水书文字的历史与传承</p>
+                </div>
+                <!-- 视频3：替换路径和描述（可选） -->
+                <div class="video-wrapper">
+                    <video controls="" autoplay="" muted="" playsinline="" preload="metadata" poster="images/video3-cover.jpg">
+                        <source src="videos/video3.mp4" type="video/mp4">
+                        您的浏览器不支持播放，请<a href="videos/video3.mp4">下载查看</a>。
+                    </video>
+                    <p class="video-desc">水族歌曲</p>
+                </div>
+                <!-- 视频4：替换路径和描述（可选） -->
+                <div class="video-wrapper">
+                    <video controls="" autoplay="" muted="" playsinline="" preload="metadata" poster="images/video4-cover.jpg">
+                        <source src="videos/video4.mp4" type="video/mp4">
+                        您的浏览器不支持播放，请<a href="videos/video4.mp4">下载查看</a>。
+                    </video>
+                    <p class="video-desc">传统水家围腰</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 联系方式板块 -->
+    <div class="container visible" id="contact">
+        <h2 class="section-title">联系我们</h2>
+        <div class="contact-section">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>非遗文化传承中心</h3>
+                    
+                    <p><i class="fas fa-phone"></i> 联系电话：15898775225</p>
+                    <p><i class="fas fa-envelope"></i> 邮箱：3049678055@qq.com</p>
+                    <p><i class="fas fa-weixin"></i> 微信：15898775225</p>
+                   
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <input type="text" id="name" placeholder="请输入您的姓名">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">联系电话</label>
+                            <input type="tel" id="phone" placeholder="请输入您的电话">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">留言内容</label>
+                            <textarea id="message" placeholder="请输入您想咨询的内容..."></textarea>
+                        </div>
+                        <button type="button" class="submit-btn">提交留言</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <h3>水书马尾绣文化宣传</h3>
+            <p>保护非遗文化 · 传承民族瑰宝</p>
+            <p>© 2026 水书马尾绣文化宣传平台 版权所有</p>
+        </div>
+    </footer>
+
+    <!-- 翻页动画JS -->
+    <script>
+        // 监听滚动，实现板块翻页动画
+        window.addEventListener('scroll', function() {
+            const containers = document.querySelectorAll('.container');
+            containers.forEach(container => {
+                const containerTop = container.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                // 当板块进入可视区域时触发动画
+                if (containerTop < windowHeight * 0.8) {
+                    container.classList.add('visible');
+                }
+            });
+        });
+
+        // 页面加载时触发一次，显示首屏内容
+        window.addEventListener('load', function() {
+            const firstContainer = document.querySelector('.container');
+            if (firstContainer) {
+                firstContainer.classList.add('visible');
+            }
+        });
+    </script>
+
+</body></html>
