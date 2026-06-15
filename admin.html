@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言管理 - 水书马尾绣宣传平台</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; }
+        :root { --primary-color: #8B4513; --secondary-color: #CD853F; --accent-color: #F5DEB3; --text-color: #333; --white: #FFF; }
+        body { background-color: #f5f0e8; min-height: 100vh; }
+        .header { background-color: var(--primary-color); color: var(--white); padding: 20px 0; text-align: center; }
+        .header h1 { font-size: 1.5rem; }
+        .header a { color: var(--accent-color); text-decoration: none; font-size: 0.9rem; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9rem; }
+        .btn-refresh { background-color: var(--secondary-color); color: var(--white); }
+        .btn-clear { background-color: #c0392b; color: var(--white); }
+        .count { color: var(--text-color); font-size: 1rem; }
+        table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background-color: var(--primary-color); color: var(--white); font-weight: 500; }
+        tr:hover td { background-color: #fdf5e6; }
+        .empty { text-align: center; padding: 60px 20px; color: #999; font-size: 1.1rem; }
+        .msg-cell { max-width: 350px; white-space: pre-wrap; word-break: break-all; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>留言管理</h1>
+        <a href="/">返回首页</a>
+    </div>
+    <div class="container">
+        <div class="toolbar">
+            <span class="count" id="count">共 0 条留言</span>
+            <div>
+                <button class="btn btn-refresh" onclick="loadMessages()">刷新</button>
+                <button class="btn btn-clear" onclick="clearMessages()">清空留言</button>
+            </div>
+        </div>
+        <table id="msgTable">
+            <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>姓名</th>
+                    <th>电话</th>
+                    <th>留言内容</th>
+                </tr>
+            </thead>
+            <tbody id="msgBody">
+                <tr><td colspan="4" class="empty">加载中...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        async function loadMessages() {
+            const tbody = document.getElementById('msgBody');
+            const countEl = document.getElementById('count');
+            try {
+                const res = await fetch('/api/messages');
+                const data = await res.json();
+                if (data.messages.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="empty">暂无留言</td></tr>';
+                    countEl.textContent = '共 0 条留言';
+                    return;
+                }
+                tbody.innerHTML = [...data.messages].reverse().map(m =>
+                    `<tr>
+                        <td>${escapeHtml(m.time || '-')}</td>
+                        <td>${escapeHtml(m.name || '-')}</td>
+                        <td>${escapeHtml(m.phone || '-')}</td>
+                        <td class="msg-cell">${escapeHtml(m.message || '-')}</td>
+                    </tr>`
+                ).join('');
+                countEl.textContent = '共 ' + data.messages.length + ' 条留言';
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="4" class="empty">加载失败，请重试</td></tr>';
+            }
+        }
+        function clearMessages() {
+            if (!confirm('确定要清空所有留言吗？此操作不可恢复。')) return;
+            fetch('/api/messages', { method: 'DELETE' }).then(() => loadMessages());
+        }
+        loadMessages();
+    </script>
+</body>
+</html>
