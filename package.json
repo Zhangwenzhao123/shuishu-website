@@ -1,0 +1,12 @@
+{
+  "name": "shuishu-website",
+  "version": "1.0.0",
+  "description": "水书马尾绣非遗文化宣传平台",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
