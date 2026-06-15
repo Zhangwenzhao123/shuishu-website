@@ -1,4 +1,17 @@
+# 压缩包（源文件已存在）
 images.zip
 videos.zip
+
+# Node.js
 node_modules/
+npm-debug.log*
+
+# 用户留言数据（含隐私信息）
 messages.json
+
+# 系统文件
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
